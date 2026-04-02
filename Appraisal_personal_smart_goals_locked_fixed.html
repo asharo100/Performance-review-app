@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TrueNorth Review</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .logo-container img {
+            height: 160px;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 80px;
+            color: #1E2B1D;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 80px;
+            margin: 0;
+        }
+
+        h2 {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 50px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 400;
+            font-size: 31px;
+            margin: 0;
+        }
+
+        .info-row {
+            width: 100%;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+        }
+
+        .info-field {
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-field label {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            color: #1E2B1D;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .info-field input {
+            width: 420px;
+            height: 52px;
+            padding: 10px 14px;
+            box-sizing: border-box;
+            border: 1px solid #bfbfbf;
+            border-radius: 8px;
+            background: white;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 22px;
+        }
+
+        .note-text {
+            margin-top: 40px;
+            text-align: center;
+            font-family: 'Work Sans', sans-serif;
+            font-style: italic;
+            font-size: 12pt;
+            color: #555555;
+            width: 100%;
+        }
+
+        .instructions {
+            margin-top: 80px;
+            width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+        }
+
+        .instructions h3 {
+            font-weight: 400;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #1E2B1D;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            font-size: 18px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .matrix-section {
+            width: 92%;
+            max-width: 1450px;
+            margin: 90px auto 60px auto;
+        }
+
+        .performance-matrix {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: fixed;
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(30, 43, 29, 0.10);
+        }
+
+        .performance-matrix th {
+            background: #7F9C9A;
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            padding: 22px 18px;
+            border-right: 1px solid rgba(255,255,255,0.45);
+        }
+
+        .performance-matrix th:last-child {
+            border-right: none;
+        }
+
+        .performance-matrix td {
+            background: rgba(255, 255, 255, 0.72);
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.45;
+            vertical-align: top;
+            padding: 26px 20px;
+            border-top: 1px solid rgba(30, 43, 29, 0.10);
+            border-right: 1px solid rgba(30, 43, 29, 0.08);
+        }
+
+        .performance-matrix td:last-child {
+            border-right: none;
+        }
+
+        .performance-matrix .pillar-cell {
+            background: rgba(211, 219, 218, 0.85);
+            font-size: 20px;
+            font-weight: 600;
+            vertical-align: middle;
+            width: 18%;
+        }
+
+        .performance-matrix tbody tr:hover td {
+            background: rgba(248, 250, 249, 0.96);
+        }
+
+        .performance-matrix tbody tr:hover .pillar-cell {
+            background: rgba(201, 211, 210, 0.96);
+        }
+
+        .goals-section {
+            width: 80%;
+            max-width: 1100px;
+            margin: 80px auto;
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+        }
+
+        .goals-heading {
+            text-align: center;
+            font-size: 31px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .goal-block {
+            background: rgba(255, 255, 255, 0.75);
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(30, 43, 29, 0.08);
+            margin-bottom: 60px;
+        }
+
+        .goal-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .goal-line {
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .employee-entry-section {
+            margin-top: 40px;
+        }
+
+        .employee-entry-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-bottom: 30px;
+        }
+
+        .entry-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .entry-field label,
+        .entry-comments-field label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1E2B1D;
+            margin-bottom: 10px;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .entry-field select {
+            height: 52px;
+            padding: 10px 14px;
+            border: 1px solid #bfbfbf;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.95);
+            font-family: 'Work Sans', sans-serif;
+            font-size: 18px;
+            color: #1E2B1D;
+            box-sizing: border-box;
+        }
+
+        .entry-comments-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .entry-comments-field textarea {
+            width: 100%;
+            min-height: 190px;
+            padding: 14px 16px;
+            border: 1px solid #bfbfbf;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.95);
+            font-family: 'Work Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1E2B1D;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .char-counter {
+            margin-top: 8px;
+            text-align: right;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 13px;
+            color: #5c675b;
+        }
+
+        .action-buttons {
+            width: 80%;
+            max-width: 1100px;
+            margin: 70px auto 100px auto;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .btn {
+            min-width: 180px;
+            height: 54px;
+            padding: 0 24px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.95;
+        }
+
+        .btn-reset {
+            background: #d9dfd8;
+            color: #1E2B1D;
+        }
+
+        .btn-pdf {
+            background: #1E2B1D;
+            color: #ffffff;
+        }
+
+        .btn-submit {
+            background: #7F9C9A;
+            color: #ffffff;
+        }
+
+        @media print {
+            .action-buttons {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div class="content">
+        <h1>TrueNorth Performance Review</h1>
+        <h2>Employee Self-Evaluation</h2>
+        <p>Period: 01/01/2026 - 06/30/2026</p>
+    </div>
+
+    <div class="info-row">
+        <div class="info-field">
+            <label for="employeeName">Name</label>
+            <input type="text" id="employeeName">
+        </div>
+
+        <div class="info-field">
+            <label for="managerName">Manager's Name</label>
+            <input type="text" id="managerName">
+        </div>
+    </div>
+
+    <div class="info-row">
+        <div class="info-field">
+            <label for="title">Title</label>
+            <input type="text" id="title">
+        </div>
+
+        <div class="info-field">
+            <label for="doj">Date of Joining</label>
+            <input type="date" id="doj">
+        </div>
+    </div>
+
+    <div class="note-text">
+        This review is intended to support professional growth, alignment with TrueNorth values, and fair performance assessment.
+    </div>
+
+    <div class="instructions">
+        <h3>Instructions for Employee Reflection:</h3>
+        <ul>
+            <li>Provide specific examples using the SBO (Situation-Behavior-Outcome) format</li>
+            <li>Define your own goals in SMART format (Specific-Measurable-Achievable-Relevant-Time Bound)</li>
+            <li>Be honest and constructive. Use the self-evaluation form as your opportunity to highlight your impact and discuss your growth</li>
+            <li>Anchor each of your self-evaluation, achievement, or example to one of the 12 boxes formed by intersection of our Values and Pillars</li>
+        </ul>
+    </div>
+
+    <div class="matrix-section">
+        <table class="performance-matrix">
+            <thead>
+                <tr>
+                    <th>Performance Pillar</th>
+                    <th>Clarity</th>
+                    <th>Care</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="pillar-cell">Client First</td>
+                    <td>Gives clients clear, jargon-free explanations of issues, options, and next steps</td>
+                    <td>Anticipates client needs, protects their time, and treats their money/reputation as their own</td>
+                    <td>Connects day-to-day work to the client’s bigger goals and long-term outcomes</td>
+                </tr>
+                <tr>
+                    <td class="pillar-cell">Accountability</td>
+                    <td>Sets explicit expectations, timelines, and owners; closes loops without ambiguity</td>
+                    <td>Owns mistakes, fixes them quickly, and communicates impact on others constructively</td>
+                    <td>Makes decisions that support the firm’s mission even when it requires extra effort or hard calls</td>
+                </tr>
+                <tr>
+                    <td class="pillar-cell">One Team</td>
+                    <td>Shares information openly so others aren’t guessing; gives context, not just tasks</td>
+                    <td>Shows up reliably for colleagues, respects workloads, and offers help without being asked</td>
+                    <td>Prioritizes firm and client success over individual or team silos; looks for win-win solutions</td>
+                </tr>
+                <tr>
+                    <td class="pillar-cell">Excel</td>
+                    <td>Defines what “excellent” looks like up front and measures against that standard</td>
+                    <td>Cares about craftsmanship and continuous improvement, not just “getting it out the door”</td>
+                    <td>Improves processes, tools, and ideas that move the business toward its long-term purpose</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="goals-section">
+        <div class="goals-heading">
+            Core Performance Goals
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Operational Excellence & Timeliness:</div>
+            <div class="goal-line"><strong>Objective:</strong> Planning, prioritizing & executing of all tasks assigned</div>
+            <div class="goal-line"><strong>Measurable Behavior:</strong> Meeting/exceeding deadlines, minimal supervision</div>
+            <div class="goal-line"><strong>Accountability:</strong> Proactive identification of risks/delays</div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating">Employee Rating</label>
+                        <select id="employeeRating">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue">Value</label>
+                        <select id="employeeValue">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar">Pillar</label>
+                        <select id="employeePillar">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments">Employee Comments</label>
+                    <textarea id="employeeComments" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Accuracy & Quality Control:</div>
+            <div class="goal-line"><strong>Objective:</strong> 100% Accuracy & aligned with procedures laid down</div>
+            <div class="goal-line"><strong>Measurable Behavior:</strong> Zero critical errors, Adheres with defined processes, conducts self-review and validation before submission of work</div>
+            <div class="goal-line"><strong>Accountability:</strong> Takes full ownership of quality of work and its outcomes, proactively identifies and corrects errors, and accepts feedback constructively</div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating2">Employee Rating</label>
+                        <select id="employeeRating2">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue2">Value</label>
+                        <select id="employeeValue2">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar2">Pillar</label>
+                        <select id="employeePillar2">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments2">Employee Comments</label>
+                    <textarea id="employeeComments2" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount2">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Client Service & Value:</div>
+            <div class="goal-line"><strong>Objective:</strong> Deliver exceptional client service</div>
+            <div class="goal-line"><strong>Measurable Behavior:</strong> Respond to client queries, escalations and requests immediately, communicates clearly and proactively on tasks with clients and vendors, anticipates client needs and identifies opportunities to add value</div>
+            <div class="goal-line"><strong>Accountability:</strong> Takes ownership of client deliverables, escalates risk and accepts responsibility for client outcomes</div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating3">Employee Rating</label>
+                        <select id="employeeRating3">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue3">Value</label>
+                        <select id="employeeValue3">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar3">Pillar</label>
+                        <select id="employeePillar3">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments3">Employee Comments</label>
+                    <textarea id="employeeComments3" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount3">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="goals-section">
+        <div class="goals-heading">
+            Leadership Goals
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Collaboration &amp; Culture (One Team):</div>
+            <div class="goal-line"><strong>Objective:</strong> Foster a collaborative, respectful and high trust work environment</div>
+            <div class="goal-line"><strong>Measurable Behavior:</strong> Shares information, knowledge, and best practices, supports team members during critical periods</div>
+            <div class="goal-line"><strong>Accountability:</strong> Takes responsibility for team outcomes, addresses conflicts, and escalates when appropriate</div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating4">Employee Rating</label>
+                        <select id="employeeRating4">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue4">Value</label>
+                        <select id="employeeValue4">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar4">Pillar</label>
+                        <select id="employeePillar4">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments4">Employee Comments</label>
+                    <textarea id="employeeComments4" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount4">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Mentorship &amp; Training:</div>
+            <div class="goal-line"><strong>Objective:</strong> Support the development of fellow team members by sharing knowledge</div>
+            <div class="goal-line"><strong>Measurable Behavior:</strong> Provides guidance, training, mentorship, shares role specific knowledge and best practices, demonstrates patience and clarity when explaining tasks or concepts</div>
+            <div class="goal-line"><strong>Accountability:</strong> Takes ownership of the growth and learning of those supported</div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating5">Employee Rating</label>
+                        <select id="employeeRating5">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue5">Value</label>
+                        <select id="employeeValue5">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar5">Pillar</label>
+                        <select id="employeePillar5">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments5">Employee Comments</label>
+                    <textarea id="employeeComments5" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount5">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Skill Development &amp; Continuous Improvement:</div>
+            <div class="goal-line"><strong>Objective:</strong> Continuously enhance professional skills and knowledge</div>
+            <div class="goal-line"><strong>Measurable Behavior:</strong> Pursue new skill development relevant to the role</div>
+            <div class="goal-line"><strong>Accountability:</strong> Takes responsibility for personal development and learning</div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating6">Employee Rating</label>
+                        <select id="employeeRating6">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue6">Value</label>
+                        <select id="employeeValue6">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar6">Pillar</label>
+                        <select id="employeePillar6">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                            <option>N/A</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments6">Employee Comments</label>
+                    <textarea id="employeeComments6" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount6">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="goals-section">
+        <div class="goals-heading">
+            Personal SMART Goals
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Goal 1</div>
+
+            <div class="entry-comments-field">
+                <label for="smartGoal1">Goal:</label>
+                <textarea id="smartGoal1" maxlength="5000" rows="7"></textarea>
+                <div class="char-counter">
+                    <span id="commentCountGoal1">0</span>/5000 characters
+                </div>
+            </div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating7">Employee Rating</label>
+                        <select id="employeeRating7">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue7">Value</label>
+                        <select id="employeeValue7">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar7">Pillar</label>
+                        <select id="employeePillar7">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments7">Employee Comments</label>
+                    <textarea id="employeeComments7" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount7">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Goal 2</div>
+
+            <div class="entry-comments-field">
+                <label for="smartGoal2">Goal:</label>
+                <textarea id="smartGoal2" maxlength="5000" rows="7"></textarea>
+                <div class="char-counter">
+                    <span id="commentCountGoal2">0</span>/5000 characters
+                </div>
+            </div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating8">Employee Rating</label>
+                        <select id="employeeRating8">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue8">Value</label>
+                        <select id="employeeValue8">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar8">Pillar</label>
+                        <select id="employeePillar8">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments8">Employee Comments</label>
+                    <textarea id="employeeComments8" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount8">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-block">
+            <div class="goal-title">Goal 3</div>
+
+            <div class="entry-comments-field">
+                <label for="smartGoal3">Goal:</label>
+                <textarea id="smartGoal3" maxlength="5000" rows="7"></textarea>
+                <div class="char-counter">
+                    <span id="commentCountGoal3">0</span>/5000 characters
+                </div>
+            </div>
+
+            <div class="employee-entry-section">
+                <div class="employee-entry-grid">
+                    <div class="entry-field">
+                        <label for="employeeRating9">Employee Rating</label>
+                        <select id="employeeRating9">
+                            <option value="">Select rating</option>
+                            <option>Role Model</option>
+                            <option>Consistently Strong</option>
+                            <option>Solid Performer</option>
+                            <option>Development Focus</option>
+                            <option>Unsatisfactory</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeeValue9">Value</label>
+                        <select id="employeeValue9">
+                            <option value="">Select value</option>
+                            <option>Clarity</option>
+                            <option>Care</option>
+                            <option>Purpose</option>
+                        </select>
+                    </div>
+
+                    <div class="entry-field">
+                        <label for="employeePillar9">Pillar</label>
+                        <select id="employeePillar9">
+                            <option value="">Select pillar</option>
+                            <option>Client First</option>
+                            <option>Accountability</option>
+                            <option>One Team</option>
+                            <option>Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="entry-comments-field">
+                    <label for="employeeComments9">Employee Comments</label>
+                    <textarea id="employeeComments9" maxlength="5000" rows="7"></textarea>
+                    <div class="char-counter">
+                        <span id="commentCount9">0</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="action-buttons">
+        <button type="button" id="resetBtn" class="btn btn-reset" onclick="resetForm()">Reset</button>
+        <button type="button" id="pdfBtn" class="btn btn-pdf" onclick="exportToPDF()">Export to PDF</button>
+        <button type="button" id="submitBtn" class="btn btn-submit" onclick="submitForm()">Submit</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const today = new Date().toISOString().split("T")[0];
+            const dojInput = document.getElementById("doj");
+            if (dojInput) {
+                dojInput.setAttribute("max", today);
+            }
+
+            wireCommentCounter("employeeComments", "commentCount");
+            wireCommentCounter("employeeComments2", "commentCount2");
+            wireCommentCounter("employeeComments3", "commentCount3");
+            wireCommentCounter("employeeComments4", "commentCount4");
+            wireCommentCounter("employeeComments5", "commentCount5");
+            wireCommentCounter("employeeComments6", "commentCount6");
+            wireCommentCounter("smartGoal1", "commentCountGoal1");
+            wireCommentCounter("employeeComments7", "commentCount7");
+            wireCommentCounter("smartGoal2", "commentCountGoal2");
+            wireCommentCounter("employeeComments8", "commentCount8");
+            wireCommentCounter("smartGoal3", "commentCountGoal3");
+            wireCommentCounter("employeeComments9", "commentCount9");
+        });
+
+        function wireCommentCounter(textareaId, counterId) {
+            const textarea = document.getElementById(textareaId);
+            const counter = document.getElementById(counterId);
+
+            if (textarea && counter) {
+                counter.textContent = textarea.value.length;
+                textarea.addEventListener("input", function () {
+                    counter.textContent = textarea.value.length;
+                });
+            }
+        }
+
+        function resetForm() {
+            const confirmed = confirm("Are you sure? This will reset the whole form and any changes made will not be saved.");
+            if (!confirmed) return;
+
+            document.querySelectorAll("input[type='text'], input[type='date'], textarea").forEach(function (field) {
+                field.value = "";
+            });
+
+            document.querySelectorAll("select").forEach(function (field) {
+                field.selectedIndex = 0;
+            });
+
+            document.querySelectorAll("[id^='commentCount']").forEach(function (counter) {
+                counter.textContent = "0";
+            });
+        }
+
+        function getMissingFields() {
+            const missingFields = [];
+
+            const requiredInputs = [
+                { id: "employeeName", label: "Name" },
+                { id: "managerName", label: "Manager's Name" },
+                { id: "title", label: "Title" },
+                { id: "doj", label: "Date of Joining" }
+            ];
+
+            requiredInputs.forEach(function (field) {
+                const el = document.getElementById(field.id);
+                if (!el || !el.value.trim()) {
+                    missingFields.push(field.label);
+                }
+            });
+
+            const requiredSelects = [
+                { id: "employeeRating", label: "Operational Excellence & Timeliness - Employee Rating" },
+                { id: "employeeValue", label: "Operational Excellence & Timeliness - Value" },
+                { id: "employeePillar", label: "Operational Excellence & Timeliness - Pillar" },
+
+                { id: "employeeRating2", label: "Accuracy & Quality Control - Employee Rating" },
+                { id: "employeeValue2", label: "Accuracy & Quality Control - Value" },
+                { id: "employeePillar2", label: "Accuracy & Quality Control - Pillar" },
+
+                { id: "employeeRating3", label: "Client Service & Value - Employee Rating" },
+                { id: "employeeValue3", label: "Client Service & Value - Value" },
+                { id: "employeePillar3", label: "Client Service & Value - Pillar" },
+
+                { id: "employeeRating4", label: "Collaboration & Culture (One Team) - Employee Rating" },
+                { id: "employeeValue4", label: "Collaboration & Culture (One Team) - Value" },
+                { id: "employeePillar4", label: "Collaboration & Culture (One Team) - Pillar" },
+
+                { id: "employeeRating5", label: "Mentorship & Training - Employee Rating" },
+                { id: "employeeValue5", label: "Mentorship & Training - Value" },
+                { id: "employeePillar5", label: "Mentorship & Training - Pillar" },
+
+                { id: "employeeRating6", label: "Skill Development & Continuous Improvement - Employee Rating" },
+                { id: "employeeValue6", label: "Skill Development & Continuous Improvement - Value" },
+                { id: "employeePillar6", label: "Skill Development & Continuous Improvement - Pillar" }
+            ];
+
+            requiredSelects.forEach(function (field) {
+                const el = document.getElementById(field.id);
+                if (!el || !el.value || el.selectedIndex === 0) {
+                    missingFields.push(field.label);
+                }
+            });
+
+            const requiredTextareas = [
+                { id: "employeeComments", label: "Operational Excellence & Timeliness - Employee Comments" },
+                { id: "employeeComments2", label: "Accuracy & Quality Control - Employee Comments" },
+                { id: "employeeComments3", label: "Client Service & Value - Employee Comments" },
+                { id: "employeeComments4", label: "Collaboration & Culture (One Team) - Employee Comments" },
+                { id: "employeeComments5", label: "Mentorship & Training - Employee Comments" },
+                { id: "employeeComments6", label: "Skill Development & Continuous Improvement - Employee Comments" }
+            ];
+
+            requiredTextareas.forEach(function (field) {
+                const el = document.getElementById(field.id);
+                if (!el || !el.value.trim()) {
+                    missingFields.push(field.label);
+                }
+            });
+
+            return missingFields;
+        }
+
+        function exportToPDF() {
+            const missingFields = getMissingFields();
+
+            if (missingFields.length > 0) {
+                alert(
+                    "Please fill all fields to export to PDF.\n\nMissing fields:\n- " +
+                    missingFields.join("\n- ")
+                );
+                return;
+            }
+
+            const buttons = document.querySelector(".action-buttons");
+            if (buttons) {
+                buttons.style.display = "none";
+            }
+
+            setTimeout(function () {
+                window.print();
+                if (buttons) {
+                    buttons.style.display = "flex";
+                }
+            }, 300);
+        }
+
+       async function submitForm() {
+    const missingFields = getMissingFields();
+
+    if (missingFields.length > 0) {
+        alert(
+            "Please fill all required fields before submitting.\n\nMissing fields:\n- " +
+            missingFields.join("\n- ")
+        );
+        return;
+    }
+
+    const formData = collectFormData();
+
+    try {
+        const response = await fetch("https://default00966cad497d4a83adc21404c75e61.21.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/69ce88db7f634c5783335cda29029a3b/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=duh5QQ-uLAEjgoBOx0Rv8cQW8LmFpZpLkdhxg9ZNcag",
+ {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            throw new Error("Submit failed with status " + response.status);
+        }
+
+        alert("Form submitted successfully.");
+        lockForm();
+    } catch (error) {
+        console.error("Submission error:", error);
+        alert("There was an error submitting the form. Please try again.");
+    }
+}
+
+        function lockForm() {
+            document.querySelectorAll("input, textarea, select").forEach(function (el) {
+                el.disabled = true;
+            });
+
+            const submitBtn = document.getElementById("submitBtn");
+            const resetBtn = document.getElementById("resetBtn");
+
+            if (submitBtn) submitBtn.disabled = true;
+            if (resetBtn) resetBtn.disabled = true;
+        }
+
+        function unlockForm() {
+            document.querySelectorAll("input, textarea, select").forEach(function (el) {
+                el.disabled = false;
+            });
+
+            const submitBtn = document.getElementById("submitBtn");
+            const resetBtn = document.getElementById("resetBtn");
+
+            if (submitBtn) submitBtn.disabled = false;
+            if (resetBtn) resetBtn.disabled = false;
+        }
+
+        function collectFormData() {
+            return {
+                employeeInfo: {
+                    name: document.getElementById("employeeName")?.value.trim() || "",
+                    managerName: document.getElementById("managerName")?.value.trim() || "",
+                    title: document.getElementById("title")?.value.trim() || "",
+                    dateOfJoining: document.getElementById("doj")?.value || ""
+                },
+
+                corePerformanceGoals: [
+                    {
+                        goalTitle: "Operational Excellence & Timeliness",
+                        employeeRating: document.getElementById("employeeRating")?.value || "",
+                        value: document.getElementById("employeeValue")?.value || "",
+                        pillar: document.getElementById("employeePillar")?.value || "",
+                        employeeComments: document.getElementById("employeeComments")?.value.trim() || ""
+                    },
+                    {
+                        goalTitle: "Accuracy & Quality Control",
+                        employeeRating: document.getElementById("employeeRating2")?.value || "",
+                        value: document.getElementById("employeeValue2")?.value || "",
+                        pillar: document.getElementById("employeePillar2")?.value || "",
+                        employeeComments: document.getElementById("employeeComments2")?.value.trim() || ""
+                    },
+                    {
+                        goalTitle: "Client Service & Value",
+                        employeeRating: document.getElementById("employeeRating3")?.value || "",
+                        value: document.getElementById("employeeValue3")?.value || "",
+                        pillar: document.getElementById("employeePillar3")?.value || "",
+                        employeeComments: document.getElementById("employeeComments3")?.value.trim() || ""
+                    }
+                ],
+
+                leadershipGoals: [
+                    {
+                        goalTitle: "Collaboration & Culture (One Team)",
+                        employeeRating: document.getElementById("employeeRating4")?.value || "",
+                        value: document.getElementById("employeeValue4")?.value || "",
+                        pillar: document.getElementById("employeePillar4")?.value || "",
+                        employeeComments: document.getElementById("employeeComments4")?.value.trim() || ""
+                    },
+                    {
+                        goalTitle: "Mentorship & Training",
+                        employeeRating: document.getElementById("employeeRating5")?.value || "",
+                        value: document.getElementById("employeeValue5")?.value || "",
+                        pillar: document.getElementById("employeePillar5")?.value || "",
+                        employeeComments: document.getElementById("employeeComments5")?.value.trim() || ""
+                    },
+                    {
+                        goalTitle: "Skill Development & Continuous Improvement",
+                        employeeRating: document.getElementById("employeeRating6")?.value || "",
+                        value: document.getElementById("employeeValue6")?.value || "",
+                        pillar: document.getElementById("employeePillar6")?.value || "",
+                        employeeComments: document.getElementById("employeeComments6")?.value.trim() || ""
+                    }
+                ],
+
+                personalSmartGoals: [
+                    {
+                        goalNumber: "Goal 1",
+                        goal: document.getElementById("smartGoal1")?.value.trim() || "",
+                        employeeRating: document.getElementById("employeeRating7")?.value || "",
+                        value: document.getElementById("employeeValue7")?.value || "",
+                        pillar: document.getElementById("employeePillar7")?.value || "",
+                        employeeComments: document.getElementById("employeeComments7")?.value.trim() || ""
+                    },
+                    {
+                        goalNumber: "Goal 2",
+                        goal: document.getElementById("smartGoal2")?.value.trim() || "",
+                        employeeRating: document.getElementById("employeeRating8")?.value || "",
+                        value: document.getElementById("employeeValue8")?.value || "",
+                        pillar: document.getElementById("employeePillar8")?.value || "",
+                        employeeComments: document.getElementById("employeeComments8")?.value.trim() || ""
+                    },
+                    {
+                        goalNumber: "Goal 3",
+                        goal: document.getElementById("smartGoal3")?.value.trim() || "",
+                        employeeRating: document.getElementById("employeeRating9")?.value || "",
+                        value: document.getElementById("employeeValue9")?.value || "",
+                        pillar: document.getElementById("employeePillar9")?.value || "",
+                        employeeComments: document.getElementById("employeeComments9")?.value.trim() || ""
+                    }
+                ]
+            };
+        }
+</script>
+</body>
+</html>
