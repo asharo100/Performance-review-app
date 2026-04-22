@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueNorth Final Performance Review</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .logo-container img {
+            height: 160px;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 80px;
+            color: #1E2B1D;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 80px;
+            margin: 0;
+        }
+
+        h2 {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 50px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 400;
+            font-size: 31px;
+            margin: 0;
+        }
+
+        .upload-section {
+            width: 100%;
+            margin-top: 65px;
+            text-align: center;
+        }
+
+        .upload-label {
+            display: block;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            color: #1E2B1D;
+            margin-bottom: 16px;
+            animation: fadeBlink 2s infinite;
+        }
+
+        .btn-upload,
+        .btn-upload-submit,
+        .btn-reset,
+        .btn-print {
+            border: none;
+            border-radius: 12px;
+            padding: 14px 28px;
+            font-size: 18px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn-upload:hover,
+        .btn-upload-submit:hover,
+        .btn-reset:hover,
+        .btn-print:hover {
+            transform: translateY(-1px);
+            opacity: 0.96;
+        }
+
+        .btn-upload {
+            background: #d9dfd8;
+            color: #1E2B1D;
+        }
+
+        .btn-upload-submit,
+        .btn-print {
+            background: #1E2B1D;
+            color: #ffffff;
+        }
+
+        .btn-reset {
+            background: #7F9C9A;
+            color: #ffffff;
+        }
+
+        .file-name {
+            margin-left: 15px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 16px;
+            color: #1E2B1D;
+        }
+
+        @keyframes fadeBlink {
+            0%   { opacity: 1; }
+            50%  { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .info-row {
+            width: 100%;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+        }
+
+        .info-field {
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-field label {
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            color: #1E2B1D;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .info-display {
+            width: 420px;
+            min-height: 52px;
+            padding: 0;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 26px;
+            color: #1E2B1D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+
+
+        .note-text {
+            margin-top: 40px;
+            text-align: center;
+            font-family: 'Work Sans', sans-serif;
+            font-style: italic;
+            font-size: 12pt;
+            color: #555555;
+            width: 100%;
+        }
+
+        .instructions {
+            margin-top: 80px;
+            width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+        }
+
+        .instructions h3 {
+            font-weight: 400;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #1E2B1D;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            font-size: 18px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .matrix-section {
+            width: 92%;
+            max-width: 1450px;
+            margin: 90px auto 60px auto;
+        }
+
+        .performance-matrix {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: fixed;
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+            background: rgba(255, 255, 255, 0.78);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(30, 43, 29, 0.10);
+        }
+
+        .performance-matrix th {
+            background: #7F9C9A;
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            padding: 22px 18px;
+            border-right: 1px solid rgba(255,255,255,0.45);
+        }
+
+        .performance-matrix th:last-child {
+            border-right: none;
+        }
+
+        .performance-matrix td {
+            background: rgba(255, 255, 255, 0.72);
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.45;
+            vertical-align: top;
+            padding: 26px 20px;
+            border-top: 1px solid rgba(30, 43, 29, 0.10);
+            border-right: 1px solid rgba(30, 43, 29, 0.08);
+        }
+
+        .performance-matrix td:last-child {
+            border-right: none;
+        }
+
+        .performance-matrix .pillar-cell {
+            background: rgba(211, 219, 218, 0.85);
+            font-size: 20px;
+            font-weight: 600;
+            vertical-align: middle;
+            width: 18%;
+        }
+
+        .performance-matrix tbody tr:hover td {
+            background: rgba(248, 250, 249, 0.96);
+        }
+
+        .performance-matrix tbody tr:hover .pillar-cell {
+            background: rgba(201, 211, 210, 0.96);
+        }
+
+        .goals-section {
+            width: 80%;
+            max-width: 1100px;
+            margin: 80px auto;
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+        }
+
+        .goals-heading {
+            text-align: center;
+            font-size: 31px;
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .goal-block {
+            background: rgba(255, 255, 255, 0.75);
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(30, 43, 29, 0.08);
+            margin-bottom: 60px;
+        }
+
+        .goal-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .goal-line {
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .review-display-section {
+            margin-top: 34px;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-bottom: 30px;
+        }
+
+        .display-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .display-field label,
+        .display-comments-field label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1E2B1D;
+            margin-bottom: 10px;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .display-value,
+        .display-comments {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #bfbfbf;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.95);
+            font-family: 'Work Sans', sans-serif;
+            color: #1E2B1D;
+        }
+
+        .display-value {
+            min-height: 52px;
+            padding: 10px 14px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .display-comments-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .display-comments {
+            min-height: 140px;
+            padding: 14px 16px;
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .action-buttons {
+            width: 80%;
+            max-width: 1100px;
+            margin: 70px auto 100px auto;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 980px) {
+            h1 { font-size: 48px; }
+            h2 { font-size: 32px; }
+            p { font-size: 22px; }
+            .info-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 28px;
+            }
+            .instructions {
+                width: 88%;
+            }
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media print {
+            #uploadContainer,
+            .action-buttons {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .goal-block,
+            .performance-matrix,
+            .info-display,
+            .display-value,
+            .display-comments {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div class="content">
+        <h1>TrueNorth Performance Review</h1>
+        <h2>Final Review Summary</h2>
+        <p>Employee Comments and Manager Review</p>
+    </div>
+
+    <div id="uploadContainer" class="upload-section">
+        <label class="upload-label">Upload Final Review File</label>
+
+        <input type="file" id="excelFile" accept=".xlsx,.xls" hidden>
+
+        <button class="btn-upload" type="button" onclick="document.getElementById('excelFile').click()">
+            Choose File
+        </button>
+
+        <span id="fileName" class="file-name">No file chosen</span>
+
+        <br><br>
+
+        <button class="btn-upload-submit" type="button" onclick="handleUpload()">
+            Upload
+        </button>
+    </div>
+
+    <div id="reviewContent" class="hidden">
+        <div class="info-row">
+            <div class="info-field">
+                <label>Name</label>
+                <div class="info-display" id="employeeName"></div>
+            </div>
+
+            <div class="info-field">
+                <label>Manager's Name</label>
+                <div class="info-display" id="managerName"></div>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="info-field">
+                <label>Title</label>
+                <div class="info-display" id="jobTitle"></div>
+            </div>
+
+            <div class="info-field">
+                <label>Date of Joining</label>
+                <div class="info-display" id="dateOfJoining"></div>
+            </div>
+        </div>
+
+        <div class="note-text">
+            This review is intended to support professional growth, alignment with TrueNorth values, and fair performance assessment.
+        </div>
+
+        
+
+        <div class="matrix-section">
+            <table class="performance-matrix">
+                <thead>
+                    <tr>
+                        <th>Performance Pillar</th>
+                        <th>Clarity</th>
+                        <th>Care</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="pillar-cell">Client First</td>
+                        <td>Gives clients clear, jargon-free explanations of issues, options, and next steps</td>
+                        <td>Anticipates client needs, protects their time, and treats their money/reputation as their own</td>
+                        <td>Connects day-to-day work to the client’s bigger goals and long-term outcomes</td>
+                    </tr>
+                    <tr>
+                        <td class="pillar-cell">Accountability</td>
+                        <td>Sets explicit expectations, timelines, and owners; closes loops without ambiguity</td>
+                        <td>Owns mistakes, fixes them quickly, and communicates impact on others constructively</td>
+                        <td>Makes decisions that support the firm’s mission even when it requires extra effort or hard calls</td>
+                    </tr>
+                    <tr>
+                        <td class="pillar-cell">One Team</td>
+                        <td>Shares information openly so others aren’t guessing; gives context, not just tasks</td>
+                        <td>Shows up reliably for colleagues, respects workloads, and offers help without being asked</td>
+                        <td>Prioritizes firm and client success over individual or team silos; looks for win-win solutions</td>
+                    </tr>
+                    <tr>
+                        <td class="pillar-cell">Excel</td>
+                        <td>Defines what “excellent” looks like up front and measures against that standard</td>
+                        <td>Cares about craftsmanship and continuous improvement, not just “getting it out the door”</td>
+                        <td>Improves processes, tools, and ideas that move the business toward its long-term purpose</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="goals-section">
+            <div class="goals-heading">Core Performance Goals</div>
+
+            <div class="goal-block">
+                <div class="goal-title">Operational Excellence &amp; Timeliness:</div>
+                <div class="goal-line"><strong>Objective:</strong> Planning, prioritizing &amp; executing of all tasks assigned</div>
+                <div class="goal-line"><strong>Measurable Behavior:</strong> Meeting/exceeding deadlines, minimal supervision</div>
+                <div class="goal-line"><strong>Accountability:</strong> Proactive identification of risks/delays</div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="core1Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="core1Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="core1Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="core1Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Accuracy &amp; Quality Control:</div>
+                <div class="goal-line"><strong>Objective:</strong> 100% Accuracy &amp; aligned with procedures laid down</div>
+                <div class="goal-line"><strong>Measurable Behavior:</strong> Zero critical errors, Adheres with defined processes, conducts self-review and validation before submission of work</div>
+                <div class="goal-line"><strong>Accountability:</strong> Takes full ownership of quality of work and its outcomes, proactively identifies and corrects errors, and accepts feedback constructively</div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="core2Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="core2Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="core2Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="core2Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Client Service &amp; Value:</div>
+                <div class="goal-line"><strong>Objective:</strong> Deliver exceptional client service</div>
+                <div class="goal-line"><strong>Measurable Behavior:</strong> Respond to client queries, escalations and requests immediately, communicates clearly and proactively on tasks with clients and vendors, anticipates client needs and identifies opportunities to add value</div>
+                <div class="goal-line"><strong>Accountability:</strong> Takes ownership of client deliverables, escalates risk and accepts responsibility for client outcomes</div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="core3Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="core3Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="core3Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="core3Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Manager Evaluation for Core Performance Goals</div>
+                <div class="review-display-section">
+                    <div class="display-field" style="margin-bottom: 24px;"><label>Manager Rating</label><div class="display-value" id="managerCoreRating"></div></div>
+                    <div class="display-comments-field"><label>Manager Comments</label><div class="display-comments" id="managerCoreComments"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goals-section">
+            <div class="goals-heading">Leadership Goals</div>
+
+            <div class="goal-block">
+                <div class="goal-title">Collaboration &amp; Culture (One Team):</div>
+                <div class="goal-line"><strong>Objective:</strong> Foster a collaborative, respectful and high trust work environment</div>
+                <div class="goal-line"><strong>Measurable Behavior:</strong> Shares information, knowledge, and best practices, supports team members during critical periods</div>
+                <div class="goal-line"><strong>Accountability:</strong> Takes responsibility for team outcomes, addresses conflicts, and escalates when appropriate</div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="lead1Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="lead1Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="lead1Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="lead1Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Mentorship &amp; Training:</div>
+                <div class="goal-line"><strong>Objective:</strong> Support the development of fellow team members by sharing knowledge</div>
+                <div class="goal-line"><strong>Measurable Behavior:</strong> Provides guidance, training, mentorship, shares role specific knowledge and best practices, demonstrates patience and clarity when explaining tasks or concepts</div>
+                <div class="goal-line"><strong>Accountability:</strong> Takes ownership of the growth and learning of those supported</div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="lead2Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="lead2Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="lead2Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="lead2Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Skill Development &amp; Continuous Improvement:</div>
+                <div class="goal-line"><strong>Objective:</strong> Continuously enhance professional skills and knowledge</div>
+                <div class="goal-line"><strong>Measurable Behavior:</strong> Pursue new skill development relevant to the role</div>
+                <div class="goal-line"><strong>Accountability:</strong> Takes responsibility for personal development and learning</div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="lead3Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="lead3Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="lead3Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="lead3Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Manager Evaluation for Leadership Goals</div>
+                <div class="review-display-section">
+                    <div class="display-field" style="margin-bottom: 24px;"><label>Manager Rating</label><div class="display-value" id="managerLeadRating"></div></div>
+                    <div class="display-comments-field"><label>Manager Comments</label><div class="display-comments" id="managerLeadComments"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="goals-section">
+            <div class="goals-heading">Personal SMART Goals</div>
+
+            <div class="goal-block">
+                <div class="goal-title">Goal 1</div>
+                <div class="display-comments-field" style="margin-bottom: 28px;"><label>Goal:</label><div class="display-comments" id="smartGoal1Text"></div></div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="smart1Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="smart1Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="smart1Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="smart1Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Goal 2</div>
+                <div class="display-comments-field" style="margin-bottom: 28px;"><label>Goal:</label><div class="display-comments" id="smartGoal2Text"></div></div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="smart2Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="smart2Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="smart2Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="smart2Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Goal 3</div>
+                <div class="display-comments-field" style="margin-bottom: 28px;"><label>Goal:</label><div class="display-comments" id="smartGoal3Text"></div></div>
+                <div class="review-display-section">
+                    <div class="review-grid">
+                        <div class="display-field"><label>Employee Rating</label><div class="display-value" id="smart3Rating"></div></div>
+                        <div class="display-field"><label>Value</label><div class="display-value" id="smart3Value"></div></div>
+                        <div class="display-field"><label>Pillar</label><div class="display-value" id="smart3Pillar"></div></div>
+                    </div>
+                    <div class="display-comments-field"><label>Employee Comments</label><div class="display-comments" id="smart3Comments"></div></div>
+                </div>
+            </div>
+
+            <div class="goal-block">
+                <div class="goal-title">Manager Evaluation for Personal SMART Goals</div>
+                <div class="review-display-section">
+                    <div class="display-field" style="margin-bottom: 24px;"><label>Manager Rating</label><div class="display-value" id="managerSmartRating"></div></div>
+                    <div class="display-comments-field"><label>Manager Comments</label><div class="display-comments" id="managerSmartComments"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button type="button" class="btn-reset" onclick="resetPage()">Reset</button>
+            <button type="button" class="btn-print" onclick="window.print()">Print</button>
+        </div>
+    </div>
+
+    <script>
+        let uploadedRow = null;
+
+        document.getElementById('excelFile').addEventListener('change', function () {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('fileName').textContent = fileName;
+        });
+
+        function safeValue(value) {
+            if (value === null || value === undefined) return '';
+            return String(value);
+        }
+
+        function setText(id, value) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = safeValue(value);
+            }
+        }
+
+        function normalizeDate(value) {
+            if (value === null || value === undefined || value === '') return '';
+            if (typeof value === 'number') {
+                const parsed = XLSX.SSF.parse_date_code(value);
+                if (parsed) {
+                    const mm = String(parsed.m).padStart(2, '0');
+                    const dd = String(parsed.d).padStart(2, '0');
+                    return `${mm}/${dd}/${parsed.y}`;
+                }
+            }
+            const asString = String(value).trim();
+            if (/^\d{4}-\d{2}-\d{2}$/.test(asString)) {
+                const [y, m, d] = asString.split('-');
+                return `${m}/${d}/${y}`;
+            }
+            return asString;
+        }
+
+        function handleUpload() {
+            const fileInput = document.getElementById('excelFile');
+
+            if (!fileInput.files.length) {
+                alert('Please choose a file first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+                    if (!jsonData.length) {
+                        alert('The uploaded file is empty.');
+                        return;
+                    }
+
+                    uploadedRow = jsonData[0];
+                    populateReview(uploadedRow);
+                } catch (error) {
+                    console.error(error);
+                    alert('There was an issue reading the file. Please upload a valid exported Excel file.');
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+
+        function populateReview(row) {
+            setText('employeeName', row.EmployeeName);
+            setText('managerName', row.ManagerName);
+            setText('jobTitle', row.JobTitle);
+            setText('dateOfJoining', normalizeDate(row.DateOfJoining));
+
+            setText('core1Rating', row.Core1Rating);
+            setText('core1Value', row.Core1Value);
+            setText('core1Pillar', row.Core1Pillar);
+            setText('core1Comments', row.Core1Comments);
+
+            setText('core2Rating', row.Core2Rating);
+            setText('core2Value', row.Core2Value);
+            setText('core2Pillar', row.Core2Pillar);
+            setText('core2Comments', row.Core2Comments);
+
+            setText('core3Rating', row.Core3Rating);
+            setText('core3Value', row.Core3Value);
+            setText('core3Pillar', row.Core3Pillar);
+            setText('core3Comments', row.Core3Comments);
+
+            setText('managerCoreRating', row.ManagerCoreRating);
+            setText('managerCoreComments', row.ManagerCoreComments);
+
+            setText('lead1Rating', row.Lead1Rating);
+            setText('lead1Value', row.Lead1Value);
+            setText('lead1Pillar', row.Lead1Pillar);
+            setText('lead1Comments', row.Lead1Comments);
+
+            setText('lead2Rating', row.Lead2Rating);
+            setText('lead2Value', row.Lead2Value);
+            setText('lead2Pillar', row.Lead2Pillar);
+            setText('lead2Comments', row.Lead2Comments);
+
+            setText('lead3Rating', row.Lead3Rating);
+            setText('lead3Value', row.Lead3Value);
+            setText('lead3Pillar', row.Lead3Pillar);
+            setText('lead3Comments', row.Lead3Comments);
+
+            setText('managerLeadRating', row.ManagerLeadRating);
+            setText('managerLeadComments', row.ManagerLeadComments);
+
+            setText('smartGoal1Text', row.SmartGoal1);
+            setText('smart1Rating', row.Smart1Rating);
+            setText('smart1Value', row.Smart1Value);
+            setText('smart1Pillar', row.Smart1Pillar);
+            setText('smart1Comments', row.Smart1Comments);
+
+            setText('smartGoal2Text', row.SmartGoal2);
+            setText('smart2Rating', row.Smart2Rating);
+            setText('smart2Value', row.Smart2Value);
+            setText('smart2Pillar', row.Smart2Pillar);
+            setText('smart2Comments', row.Smart2Comments);
+
+            setText('smartGoal3Text', row.SmartGoal3);
+            setText('smart3Rating', row.Smart3Rating);
+            setText('smart3Value', row.Smart3Value);
+            setText('smart3Pillar', row.Smart3Pillar);
+            setText('smart3Comments', row.Smart3Comments);
+
+            setText('managerSmartRating', row.ManagerSmartRating);
+            setText('managerSmartComments', row.ManagerSmartComments);
+
+            document.getElementById('uploadContainer').classList.add('hidden');
+            document.getElementById('reviewContent').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetPage() {
+            uploadedRow = null;
+            document.getElementById('excelFile').value = '';
+            document.getElementById('fileName').textContent = 'No file chosen';
+            document.getElementById('reviewContent').classList.add('hidden');
+            document.getElementById('uploadContainer').classList.remove('hidden');
+            document.querySelectorAll('.info-display, .display-value, .display-comments').forEach(function (el) {
+                el.textContent = '';
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
