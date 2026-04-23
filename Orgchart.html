@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrueNorth Org Chart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F0EB;
+      --surface: rgba(255, 255, 255, 0.90);
+      --surface-strong: #FFFFFF;
+      --text: #1E2B1D;
+      --muted: #5f706f;
+      --line: rgba(30, 43, 29, 0.10);
+      --kuro: #1E2B1D;
+      --lion: #C6964F;
+      --cambridge: #799997;
+      --ice-floe: #D3E4DE;
+      --isabelline: #F5F0EB;
+      --white: #FFFFFF;
+      --kuro-shade: #182318;
+      --lion-soft: #D8B27A;
+      --cambridge-soft: #A8C0BE;
+      --ice-floe-soft: #E7F0EC;
+      --shadow: 0 18px 42px rgba(30, 43, 29, 0.10);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --max-width: 1500px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Work Sans', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(121,153,151,0.18), transparent 24%),
+        radial-gradient(circle at top right, rgba(198,150,79,0.12), transparent 18%),
+        linear-gradient(180deg, #fbf9f6 0%, var(--bg) 100%);
+    }
+
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 36px 24px 56px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(30,43,29,0.98), rgba(121,153,151,0.92));
+      color: white;
+      border-radius: 34px;
+      padding: 28px 36px 24px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 26px;
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(198,150,79,0.16);
+    }
+
+    .eyebrow {
+      display: block;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.05;
+      margin: 0;
+      letter-spacing: -0.03em;
+      max-width: 760px;
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 760px;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .section {
+      margin-top: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+      padding: 0 2px;
+    }
+
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green-900);
+      margin: 0;
+    }
+
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(121,153,151,0.38), rgba(121,153,151,0.08));
+      border-radius: 999px;
+    }
+
+    .band,
+    .team-grid,
+    .manager-grid,
+    .director-grid,
+    .partner-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .partner-grid {
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+    }
+
+    .director-grid {
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+    }
+
+    .manager-grid {
+      grid-template-columns: repeat(3, minmax(240px, 1fr));
+    }
+
+    .team-grid {
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(245,240,235,0.94));
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(121,153,151,0.18);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      position: relative;
+    }
+
+    .leader-card {
+      padding: 22px 22px 20px;
+    }
+
+    .leader-card.partner {
+      background: linear-gradient(135deg, rgba(30,43,29,0.98), rgba(121,153,151,0.88));
+      color: white;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .leader-card.director {
+      background: linear-gradient(135deg, rgba(211,228,222,0.95), rgba(255,255,255,0.96));
+    }
+
+    .leader-card.manager {
+      background: linear-gradient(135deg, rgba(198,150,79,0.20), rgba(255,255,255,0.96));
+    }
+
+    .person-top {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(211,228,222,0.88), rgba(255,255,255,0.96));
+      color: var(--kuro);
+      border: 1px solid rgba(121,153,151,0.20);
+      overflow: hidden;
+    }
+
+    .partner .avatar {
+      background: rgba(255,255,255,0.14);
+      color: white;
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .role {
+      margin-top: 4px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .partner .role {
+      color: rgba(255,255,255,0.84);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 14px;
+      background: rgba(198,150,79,0.18);
+      color: var(--kuro);
+    }
+
+    .partner .tag {
+      background: rgba(255,255,255,0.14);
+      color: white;
+    }
+
+    .team-card {
+      padding: 0;
+      overflow: hidden;
+      background: rgba(255,255,255,0.86);
+    }
+
+    .team-header {
+      padding: 22px;
+      background: linear-gradient(135deg, rgba(30,43,29,0.96), rgba(121,153,151,0.82));
+      color: white;
+    }
+
+    .team-header.alt {
+      background: linear-gradient(135deg, rgba(121,153,151,0.94), rgba(30,43,29,0.90));
+    }
+
+    .team-header.blue {
+      background: linear-gradient(135deg, rgba(121,153,151,0.96), rgba(211,228,222,0.88));
+      color: var(--kuro);
+    }
+
+    .team-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .team-lead {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .team-header .avatar {
+      background: rgba(255,255,255,0.14);
+      color: white;
+      border-color: rgba(255,255,255,0.16);
+    }
+
+    .team-header .role,
+    .team-header .subtle {
+      color: rgba(255,255,255,0.84);
+    }
+
+    .team-header.blue .name,
+    .team-header.blue .role,
+    .team-header.blue .subtle,
+    .team-header.blue .avatar {
+      color: var(--kuro);
+    }
+
+    .team-header.blue .avatar {
+      background: rgba(255,255,255,0.30);
+      border-color: rgba(30,43,29,0.08);
+    }
+
+    .subtle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .team-members {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .member {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,240,235,0.96));
+      border: 1px solid rgba(121,153,151,0.18);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      cursor: pointer;
+    }
+
+    .member:hover,
+    .leader-card[data-clickable="true"]:hover,
+    .team-card[data-person]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(30, 43, 29, 0.12);
+      border-color: rgba(198,150,79,0.30);
+    }
+
+    .member .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      font-size: 15px;
+    }
+
+    .member-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .member-role {
+      margin-top: 3px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .india-section {
+      background: linear-gradient(180deg, rgba(211,228,222,0.66), rgba(255,255,255,0.92));
+      border: 1px solid rgba(121,153,151,0.18);
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .leader-card[data-clickable="true"] {
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 21, 16, 0.50);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 50;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(720px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,240,235,0.98));
+      border: 1px solid rgba(121,153,151,0.18);
+      border-radius: 30px;
+      box-shadow: 0 28px 90px rgba(30, 43, 29, 0.18);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      padding: 28px 28px 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(30,43,29,0.08);
+    }
+
+    .modal-body {
+      padding: 24px 28px 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .meta-box {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,240,235,0.96));
+      border: 1px solid rgba(121,153,151,0.16);
+    }
+
+    .meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .meta-value {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .close-btn {
+      border: 0;
+      background: rgba(121,153,151,0.14);
+      color: var(--kuro);
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1100px) {
+      .manager-grid,
+      .team-grid,
+      .partner-grid,
+      .director-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page { padding: 18px 14px 36px; }
+      .hero { padding: 24px 20px; border-radius: 26px; }
+      .card { border-radius: 24px; }
+      .team-members,
+      .modal-grid { grid-template-columns: 1fr; }
+      .team-meta { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div style="text-align:center; margin-bottom:10px;">
+        <img src="logo1.png" alt="TrueNorth Logo" style="height:60px; object-fit:contain;" />
+      </div>
+      <div class="eyebrow">TrueNorth • Organization Structure</div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Partners</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="partner-grid">
+        <article class="card leader-card partner" data-clickable="true" data-person='{"name":"Will Price","role":"Partner","team":"Executive Leadership","location":"Beverly Hills","bio":"Partner within executive leadership.","email":"","notes":"Top-level firm leadership."}'>
+          <div class="person-top">
+            <div class="avatar">WP</div>
+            <div>
+              <h3 class="name">Will Price</h3>
+              <div class="role">Partner</div>
+            </div>
+          </div>
+          <div class="tag">Executive Leadership</div>
+        </article>
+
+        <article class="card leader-card partner" data-clickable="true" data-person='{"name":"Buwa Ijirigho","role":"Partner","team":"Executive Leadership","location":"Beverly Hills","bio":"Partner within executive leadership.","email":"","notes":"Top-level firm leadership."}'>
+          <div class="person-top">
+            <div class="avatar">BI</div>
+            <div>
+              <h3 class="name">Buwa Ijirigho</h3>
+              <div class="role">Partner</div>
+            </div>
+          </div>
+          <div class="tag">Executive Leadership</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Firm Leadership Reporting to Both Partners</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="manager-grid" style="grid-template-columns: repeat(3, minmax(260px, 1fr));">
+        <article class="card leader-card director" data-clickable="true" data-person='{"name":"Hector Galindo","role":"Director","team":"Leadership","location":"Beverly Hills","bio":"Director reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">HG</div><div><h3 class="name">Hector Galindo</h3><div class="role">Director</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+        <article class="card leader-card director" data-clickable="true" data-person='{"name":"Jeff Pizante","role":"Tax Director","team":"Tax Leadership","location":"Beverly Hills","bio":"Tax Director reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">JP</div><div><h3 class="name">Jeff Pizante</h3><div class="role">Tax Director</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+        <article class="card leader-card director" data-clickable="true" data-person='{"name":"Kathy Tagawa","role":"Tax Senior Manager","team":"Tax Leadership","location":"Beverly Hills","bio":"Tax Senior Manager reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">KT</div><div><h3 class="name">Kathy Tagawa</h3><div class="role">Tax Senior Manager</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+        <article class="card leader-card manager" data-clickable="true" data-person='{"name":"Esther Tan","role":"Business Manager","team":"Business Management","location":"Beverly Hills","bio":"Business Manager reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">ET</div><div><h3 class="name">Esther Tan</h3><div class="role">Business Manager</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+        <article class="card leader-card manager" data-clickable="true" data-person='{"name":"Johnathan Hibbard","role":"Business Manager","team":"Business Management","location":"Beverly Hills","bio":"Business Manager reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">JH</div><div><h3 class="name">Johnathan Hibbard</h3><div class="role">Business Manager</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+        <article class="card leader-card manager" data-clickable="true" data-person='{"name":"Ashish Arora","role":"Supervisor","team":"India Operations","location":"Beverly Hills","bio":"Supervisor reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">AA</div><div><h3 class="name">Ashish Arora</h3><div class="role">Supervisor</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+        <article class="card leader-card manager" data-clickable="true" data-person='{"name":"Quincy Harrison","role":"Office Manager","team":"Operations","location":"Beverly Hills","bio":"Office Manager reporting to both partners.","email":"","notes":"Firm leadership."}'>
+          <div class="person-top"><div class="avatar">QH</div><div><h3 class="name">Quincy Harrison</h3><div class="role">Office Manager</div></div></div>
+          <div class="tag">Reports to Both Partners</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Tax Team</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="team-grid" style="grid-template-columns: 1fr;">
+        <article class="card team-card" data-person='{"name":"Evan Endo","role":"Supervisor","team":"Tax Team","location":"Beverly Hills"}'>
+          <div class="team-header">
+            <div class="team-meta">
+              <div class="team-lead">
+                <div class="avatar">EE</div>
+                <div>
+                  <h3 class="name">Evan Endo</h3>
+                  <div class="role">Supervisor</div>
+                </div>
+              </div>
+              <div class="subtle">Reporting to Jeff Pizante & Kathy Tagawa</div>
+            </div>
+          </div>
+          <div class="team-members" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+            <div class="member" data-person='{"name":"Michael Sato","role":"Associate","team":"Tax Team","location":"Beverly Hills","bio":"Associate reporting to Evan Endo.","email":"","notes":"Direct report to Evan Endo."}'><div class="avatar">MS</div><div><h4 class="member-name">Michael Sato</h4><div class="member-role">Associate</div></div></div>
+            <div class="member" data-person='{"name":"Sarahi Quintero","role":"Senior Associate","team":"Tax Team","location":"Beverly Hills","bio":"Senior Associate reporting to Evan Endo.","email":"","notes":"Direct report to Evan Endo."}'><div class="avatar">SQ</div><div><h4 class="member-name">Sarahi Quintero</h4><div class="member-role">Senior Associate</div></div></div>
+            <div class="member" data-person='{"name":"Evan Motoyasu","role":"Intern","team":"Tax Team","location":"Beverly Hills","bio":"Intern with shared reporting to Michael Sato and Sarahi Quintero.","email":"","notes":"Shared reporting to both Michael Sato and Sarahi Quintero."}'><div class="avatar">EM</div><div><h4 class="member-name">Evan Motoyasu</h4><div class="member-role">Intern</div></div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Hector Galindo Team</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="team-grid">
+        <article class="card team-card" data-person='{"name":"Bianca Insigne","role":"Supervisor","team":"Hector Galindo Team","location":"Beverly Hills"}'>
+          <div class="team-header alt">
+            <div class="team-meta">
+              <div class="team-lead"><div class="avatar">BI</div><div><h3 class="name">Bianca Insigne</h3><div class="role">Supervisor</div></div></div>
+              <div class="subtle">Reporting to Hector Galindo</div>
+            </div>
+          </div>
+          <div class="team-members">
+            <div class="member" data-person='{"name":"Sheila Donida","role":"Senior Account Manager","team":"Bianca Insigne Team","location":"Beverly Hills","bio":"Senior Account Manager reporting to Bianca Insigne.","email":"","notes":"Direct report to Bianca Insigne."}'><div class="avatar">SD</div><div><h4 class="member-name">Sheila Donida</h4><div class="member-role">Senior Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Linh Lam","role":"Account Manager","team":"Bianca Insigne Team","location":"Beverly Hills","bio":"Account Manager reporting to Bianca Insigne.","email":"","notes":"Direct report to Bianca Insigne."}'><div class="avatar">LL</div><div><h4 class="member-name">Linh Lam</h4><div class="member-role">Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Kaitrin Hudson","role":"Account Manager","team":"Bianca Insigne Team","location":"Beverly Hills","bio":"Account Manager reporting to Bianca Insigne.","email":"","notes":"Direct report to Bianca Insigne."}'><div class="avatar">KH</div><div><h4 class="member-name">Kaitrin Hudson</h4><div class="member-role">Account Manager</div></div></div>
+          </div>
+        </article>
+
+        <article class="card team-card" data-person='{"name":"Biquis Herrera","role":"Supervisor","team":"Hector Galindo Team","location":"Beverly Hills"}'>
+          <div class="team-header">
+            <div class="team-meta">
+              <div class="team-lead"><div class="avatar">BH</div><div><h3 class="name">Biquis Herrera</h3><div class="role">Supervisor</div></div></div>
+              <div class="subtle">Reporting to Hector Galindo</div>
+            </div>
+          </div>
+          <div class="team-members">
+            <div class="member" data-person='{"name":"Gabriela Matheu","role":"Account Manager","team":"Biquis Herrera Team","location":"Beverly Hills","bio":"Account Manager reporting to Biquis Herrera.","email":"","notes":"Direct report to Biquis Herrera."}'><div class="avatar">GM</div><div><h4 class="member-name">Gabriela Matheu</h4><div class="member-role">Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Christian Alberto","role":"Senior Account Manager","team":"Biquis Herrera Team","location":"Beverly Hills","bio":"Senior Account Manager reporting to Biquis Herrera.","email":"","notes":"Direct report to Biquis Herrera."}'><div class="avatar">CA</div><div><h4 class="member-name">Christian Alberto</h4><div class="member-role">Senior Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Roy Quezada","role":"Senior Account Manager","team":"Biquis Herrera Team","location":"Beverly Hills","bio":"Senior Account Manager reporting to Biquis Herrera.","email":"","notes":"Direct report to Biquis Herrera."}'><div class="avatar">RQ</div><div><h4 class="member-name">Roy Quezada</h4><div class="member-role">Senior Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Audrey Tadas","role":"Assistant Account Manager","team":"Biquis Herrera Team","location":"Beverly Hills","bio":"Assistant Account Manager reporting to Biquis Herrera.","email":"","notes":"Direct report to Biquis Herrera."}'><div class="avatar">AT</div><div><h4 class="member-name">Audrey Tadas</h4><div class="member-role">Assistant Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Gerald Guanlao","role":"Assistant Account Manager","team":"Biquis Herrera Team","location":"Beverly Hills","bio":"Assistant Account Manager reporting to Gabriela Matheu.","email":"","notes":"Sub-report under Gabriela Matheu."}'><div class="avatar">GG</div><div><h4 class="member-name">Gerald Guanlao</h4><div class="member-role">Assistant Account Manager</div></div></div>
+            <div class="member" data-person='{"name":"Joseph Martinez","role":"Assistant Account Manager","team":"Biquis Herrera Team","location":"Beverly Hills","bio":"Assistant Account Manager reporting to Christian Alberto.","email":"","notes":"Sub-report under Christian Alberto."}'><div class="avatar">JM</div><div><h4 class="member-name">Joseph Martinez</h4><div class="member-role">Assistant Account Manager</div></div></div>
+          </div>
+        </article>
+      </div>
+
+      <div style="margin-top:18px;">
+        <article class="card leader-card manager" data-clickable="true" data-person='{"name":"Linsie De Leon","role":"Assistant Account Manager","team":"Hector Galindo Team","location":"Beverly Hills","bio":"Assistant Account Manager reporting directly to Hector Galindo.","email":"","notes":"Direct report to Hector Galindo."}'>
+          <div class="person-top"><div class="avatar">LD</div><div><h3 class="name">Linsie De Leon</h3><div class="role">Assistant Account Manager</div></div></div>
+          <div class="tag">Direct Report to Hector Galindo</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Esther Tan Team</h2>
+        <div class="section-rule"></div>
+      </div>
+      <article class="card team-card">
+        <div class="team-header alt">
+          <div class="team-meta">
+            <div class="team-lead"><div class="avatar">ET</div><div><h3 class="name">Esther Tan</h3><div class="role">Business Manager</div></div></div>
+            <div class="subtle">Reporting to Both Partners</div>
+          </div>
+        </div>
+        <div class="team-members">
+          <div class="member" data-person='{"name":"Adela Kim","role":"Senior Account Manager","team":"Esther Tan Team","location":"Beverly Hills","bio":"Senior Account Manager reporting to Esther Tan.","email":"","notes":"Direct report to Esther Tan."}'><div class="avatar">AK</div><div><h4 class="member-name">Adela Kim</h4><div class="member-role">Senior Account Manager</div></div></div>
+          <div class="member" data-person='{"name":"Fernando Velasco","role":"Account Manager","team":"Esther Tan Team","location":"Beverly Hills","bio":"Account Manager reporting to Esther Tan.","email":"","notes":"Direct report to Esther Tan."}'><div class="avatar">FV</div><div><h4 class="member-name">Fernando Velasco</h4><div class="member-role">Account Manager</div></div></div>
+          <div class="member" data-person='{"name":"Million Mebratu","role":"Assistant Account Manager","team":"Esther Tan / Quincy Harrison","location":"Beverly Hills","bio":"Assistant Account Manager reporting to Fernando Velasco and also to Quincy Harrison through shared reporting.","email":"","notes":"Shared reporting relationship."}'><div class="avatar">MM</div><div><h4 class="member-name">Million Mebratu</h4><div class="member-role">Assistant Account Manager</div></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">India Team</h2>
+        <div class="section-rule"></div>
+      </div>
+      <article class="card team-card india-section">
+        <div class="team-header blue">
+          <div class="team-meta">
+            <div class="team-lead">
+              <div class="avatar">AA</div>
+              <div>
+                <h3 class="name">Ashish Arora</h3>
+                <div class="role">Supervisor</div>
+              </div>
+            </div>
+            <div class="subtle">Reporting to Both Partners</div>
+          </div>
+        </div>
+        <div class="team-members">
+          <div class="member" data-person='{"name":"Twinkle Mittal","role":"Manager (India)","team":"Ashish Arora Team","location":"India","bio":"Manager (India) reporting to Ashish Arora.","email":"","notes":"Direct report to Ashish Arora."}'><div class="avatar">TM</div><div><h4 class="member-name">Twinkle Mittal</h4><div class="member-role">Manager (India)</div></div></div>
+          <div class="member" data-person='{"name":"Pranav Aggarwal","role":"Senior Associate (India)","team":"Ashish Arora Team","location":"India","bio":"Senior Associate (India) reporting to Twinkle Mittal.","email":"","notes":"Direct report to Twinkle Mittal."}'><div class="avatar">PA</div><div><h4 class="member-name">Pranav Aggarwal</h4><div class="member-role">Senior Associate (India)</div></div></div>
+          <div class="member" data-person='{"name":"Gitanjali Gupta","role":"Senior Associate (India)","team":"Ashish Arora Team","location":"India","bio":"Senior Associate (India) reporting to Twinkle Mittal.","email":"","notes":"Direct report to Twinkle Mittal."}'><div class="avatar">GG</div><div><h4 class="member-name">Gitanjali Gupta</h4><div class="member-role">Senior Associate (India)</div></div></div>
+          <div class="member" data-person='{"name":"Naina Pandey","role":"Associate (India)","team":"Ashish Arora Team","location":"India","bio":"Associate (India) reporting to Twinkle Mittal.","email":"","notes":"Direct report to Twinkle Mittal."}'><div class="avatar">NP</div><div><h4 class="member-name">Naina Pandey</h4><div class="member-role">Associate (India)</div></div></div>
+          <div class="member" data-person='{"name":"Yashwant Patwal","role":"Associate (India)","team":"Ashish Arora Team","location":"India","bio":"Associate (India) reporting to Twinkle Mittal.","email":"","notes":"Direct report to Twinkle Mittal."}'><div class="avatar">YP</div><div><h4 class="member-name">Yashwant Patwal</h4><div class="member-role">Associate (India)</div></div></div>
+          <div class="member" data-person='{"name":"Richa Jain","role":"Associate (India)","team":"Ashish Arora Team","location":"India","bio":"Associate (India) reporting to Twinkle Mittal.","email":"","notes":"Direct report to Twinkle Mittal."}'><div class="avatar">RJ</div><div><h4 class="member-name">Richa Jain</h4><div class="member-role">Associate (India)</div></div></div>
+          <div class="member" data-person='{"name":"Vikram Kapoor","role":"Associate (India)","team":"Ashish Arora Team","location":"India","bio":"Associate (India) reporting to Twinkle Mittal.","email":"","notes":"Direct report to Twinkle Mittal."}'><div class="avatar">VK</div><div><h4 class="member-name">Vikram Kapoor</h4><div class="member-role">Associate (India)</div></div></div>
+        </div>
+      </article>
+    </section>
+
+    
+  </div>
+
+  <div class="modal" id="profileModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="person-top">
+          <div class="avatar" id="modalAvatar">AA</div>
+          <div>
+            <h3 class="name" id="modalName">Name</h3>
+            <div class="role" id="modalRole">Role</div>
+          </div>
+        </div>
+        <button class="close-btn" id="closeModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="meta-box">
+            <div class="meta-label">Team</div>
+            <div class="meta-value" id="modalTeam">—</div>
+          </div>
+          <div class="meta-box">
+            <div class="meta-label">Email</div>
+            <div class="meta-value" id="modalEmail">—</div>
+          </div>
+          <div class="meta-box">
+            <div class="meta-label">Location</div>
+            <div class="meta-value" id="modalLocation">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('profileModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalName = document.getElementById('modalName');
+    const modalRole = document.getElementById('modalRole');
+    const modalTeam = document.getElementById('modalTeam');
+    const modalLocation = document.getElementById('modalLocation');
+    const modalEmail = document.getElementById('modalEmail');
+    const modalAvatar = document.getElementById('modalAvatar');
+
+    function initials(name) {
+      return (name || '')
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(part => part[0])
+        .join('')
+        .toUpperCase();
+    }
+
+    function getEmailFromName(name) {
+      if (!name) return '—';
+      const overrides = {
+        'Evan Motoyasu': 'evanm@truenorthbm.com',
+        'Evan Endo': 'evan@truenorthbm.com'
+      };
+      if (overrides[name]) return overrides[name];
+      const first = name.split(' ')[0].toLowerCase();
+      return `${first}@truenorthbm.com`;
+    }
+
+    function openProfile(person) {
+      modalName.textContent = person.name || 'Name';
+      modalRole.textContent = person.role || 'Role';
+      modalTeam.textContent = person.team || '—';
+      modalEmail.textContent = getEmailFromName(person.name);
+      modalLocation.textContent = person.location || '—';
+      modalAvatar.textContent = initials(person.name || '');
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    document.querySelectorAll('[data-person]').forEach((card) => {
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const raw = card.getAttribute('data-person');
+        if (!raw) return;
+        try {
+          const person = JSON.parse(raw);
+          openProfile(person);
+        } catch (err) {
+          console.error('Invalid profile data', err);
+        }
+      });
+    });
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', closeModal);
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
